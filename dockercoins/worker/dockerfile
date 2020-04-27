@@ -1,0 +1,12 @@
+FROM python:alpine
+RUN pip install redis
+RUN pip install requests
+RUN apk add curl
+COPY ./worker.py ./
+RUN echo DOWNLOADING CONSUL CLI
+RUN curl -o ./consul.zip  -O -J -L https://releases.hashicorp.com/consul/1.6.2/consul_1.6.2_linux_amd64.zip 
+RUN unzip ./consul.zip -d /bin/
+COPY entry-point.sh /bin/
+COPY envconsul /bin/
+ENTRYPOINT ["entry-point.sh"]
+CMD ["python", "./worker.py"]
