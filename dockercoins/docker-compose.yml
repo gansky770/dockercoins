@@ -25,5 +25,7 @@ services:
         build: ./webui
         ports:  
         - 0.0.0.0:8000:80
+        volumes:
+        - "./webui/files/:/files/"
   redis:
         image: redis
